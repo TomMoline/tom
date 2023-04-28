@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Thomas Moline's JavaScript Example</title>
+	<meta name="Thomas Moline's JavaScript Example" content="Thomas Moline has over 45 years working as a graphic artist! This is a simple JavaScript game that Tom has modified to make it his own.">
+	<link rel="stylesheet" href="style.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+   <style>
+      canvas {
+      border:3px solid #0063b3;
+      background-color: #62a0d6;
+      }
+   </style>
+
+  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- Bootstrap Stylesheet-->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel='stylesheet' type='text/css'>
+
+
+</head>
+
+<body onload="startGame()">
+  <header>
+    <div class="header-hero">
+    </div>
+  </header>
+
+  <nav>
+    <ul>
+        <li><a href="index.html">Home</a> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </li>
+        <li><small><i class="fa fa-user" aria-hidden="true"></i></small><a href="resume.html">&nbsp;Resume</a> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </li>
+        <li><small><i class="fa fa-pencil" aria-hidden="true"></i></small><a href="illustration.html">&nbsp;Illustration</a> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </li>
+        <li><small><i class="fa fa-camera" aria-hidden="true"></i></small><a href="photography.html">&nbsp;Photography</a> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </li>
+        <li><small><i class="fa fa-video-camera" aria-hidden="true"></i></small><a href="multimedia.html">&nbsp;Multimedia</a> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </li>
+        <li><small><i class="fa fa-image" aria-hidden="true"></i></small><a href="graphics.html">&nbsp;Graphics</a> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </li>
+        <li><small><i class="fa fa-play-circle" aria-hidden="true"></i></small><a href="javascript.html">&nbsp;Javascript</a></li>
+      </ul>  
+      <div id="molineicon_hype_container" style="margin:auto;position:relative;width:1920px;height:32px;overflow:hidden;">
+      <script type="text/javascript" charset="utf-8" src="moline-icon.hyperesources/molineicon_hype_generated_script.js?115"></script>
+    </div>
+  </nav>
+
+    <!--This is the main section-->
+    <main>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-12">
+          <h1>Thomas Moline's JavaScript</h1>
+        </div>
+      <div class="row">
+      <div class="col-sm-2">
+      </div>
+      <div class="col-sm-8">
+        <h2> A simple Javascript game</h2>
+         <p>I've has returned to the classroom to learn new skills. Although a novice at Javascript, it's interesting to explore what can be done. This example is made to work on a desktop. I modified the graphics and some of the functions of this simple JavaScript game.</p>
+        </div>
+        <div class="col-sm-2">
+        </div>
+
+          <div class="col-sm-12">
+
+	         <div id="game">
+          <div class="game-controls">
+          <button class="myButton" onmousedown="accelerate(-0.2)" onmouseup="accelerate(0.05)">FIRE BOOSTER</button>
+          <p></p>
+          </div>
+
+         <div class="row">
+      <div class="col-sm-2">
+      </div>
+      <div class="col-sm-8">
+         <h2>Have Fun!</h2>
+        Get a score of 1200 to see the moon buggy. Get a score of over 2200 to see the astronaut!
+        <br>
+        </div>
+        <div class="col-sm-2">
+        </div>
+
+
+<!-- This is the JavaScript for the game-->
+
+   <script>
+      var myGamePiece;
+      var myObstacles = [];
+      var myScore;
+      
+      function startGame() {
+          myGamePiece = new component(30, 30, "images/spaceship3.png", 10, 120, "image");
+          myGamePiece.gravity = 0.05;
+          myScore = new component("30px", "Consolas", "yellow", 420, 40, "text");
+          myBackground = new component(2200, 400, "images/moonpan-apollo17-big.jpg", 0, 0, "image");
+
+          myGameArea.start();
+      }
+      
+      var myGameArea = {
+          canvas : document.createElement("canvas"),
+          start : function() {
+              this.canvas.width = 800;
+              this.canvas.height = 400; 
+              this.context = this.canvas.getContext("2d");
+              var myGame = document.getElementById("game");
+              myGame.insertBefore(this.canvas, myGame.childNodes[0]);        
+              this.frameNo = 0;
+              this.interval = setInterval(updateGameArea, 20);
+           },
+          clear : function() {
+              this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+          }
+      }
+      
+      function component(width, height, color, x, y, type) {
+          this.type = type;
+          if (type == "image") {
+            this.image = new Image();
+            this.image.src = color;
+          }
+          this.score = 0;
+          this.width = width;
+          this.height = height;
+          this.speedX = 0;
+          this.speedY = 0;    
+          this.x = x;
+          this.y = y;
+          this.gravity = 0;
+          this.gravitySpeed = 0;
+          this.update = function() {
+              ctx = myGameArea.context;
+
+             if (type == "image") {
+                  ctx.drawImage(this.image,
+                this.x,
+                this.y,
+                this.width, this.height);
+              }else if (this.type == "text") {
+
+
+                  ctx.font = this.width + " " + this.height;
+                  ctx.fillStyle = color;
+                  ctx.fillText(this.text, this.x, this.y);
+              } else {
+                  ctx.fillStyle = color;
+                  ctx.fillRect(this.x, this.y, this.width, this.height);
+              }
+          }
+          this.newPos = function() {
+              this.gravitySpeed += this.gravity;
+              this.x += this.speedX;
+              this.y += this.speedY + this.gravitySpeed;
+              this.hitBottom();
+          }
+          this.hitBottom = function() {
+              var rockbottom = myGameArea.canvas.height - this.height;
+              if (this.y > rockbottom) {
+                  this.y = rockbottom;
+                  this.gravitySpeed = 0;
+              }
+           }
+          this.crashWith = function(otherobj) {
+              var myleft = this.x;
+              var myright = this.x + (this.width);
+              var mytop = this.y;
+              var mybottom = this.y + (this.height);
+              var otherleft = otherobj.x;
+              var otherright = otherobj.x + (otherobj.width);
+              var othertop = otherobj.y;
+              var otherbottom = otherobj.y + (otherobj.height);
+              var crash = true;
+              if ((mybottom < othertop) || (mytop > otherbottom) || (myright < otherleft) || (myleft > otherright)) {
+                  crash = false;
+              }
+              return crash;
+          }
+      }
+      
+      function updateGameArea() {
+          var x, height, gap, minHeight, maxHeight, minGap, maxGap;
+          for (i = 0; i < myObstacles.length; i += 1) {
+              if (myGamePiece.crashWith(myObstacles[i])) {
+                  return;
+              } 
+          }
+          myGameArea.clear();
+          myBackground.speedX = -.2;
+          myBackground.newPos();
+          myBackground.update();
+          myGameArea.frameNo += 1;
+          if (myGameArea.frameNo == 1 || everyinterval(150)) {
+              x = myGameArea.canvas.width;
+              minHeight = 20;
+              maxHeight = 200;
+              height = Math.floor(Math.random()*(maxHeight-minHeight+1)+minHeight);
+              minGap = 50;
+              maxGap = 200;
+              gap = Math.floor(Math.random()*(maxGap-minGap+1)+minGap);
+              myObstacles.push(new component(20, height, "#b35d45", x, 0));
+              myObstacles.push(new component(20, x - height - gap, "#b35d45", x, height + gap));
+          }
+          for (i = 0; i < myObstacles.length; i += 1) {
+              myObstacles[i].x += -1;
+              myObstacles[i].update();
+          }
+          myScore.text="SCORE: " + myGameArea.frameNo;
+          myScore.update();
+          myGamePiece.newPos();
+          myGamePiece.update();
+      }
+      
+      function everyinterval(n) {
+          if ((myGameArea.frameNo / n) % 1 == 0) {return true;}
+          return false;
+      }
+      
+      function accelerate(n) {
+          myGamePiece.gravity = n;
+          if (accelerate =="n") {myGamePiece.gravity = -.2; }
+      }
+
+      </script>
+    </div>
+	</main>
+
+  <footer>
+    <div id="molinelogoanimv2_hype_container" style="margin:auto;position:relative;width:1920px;height:100px;overflow:hidden;">
+      <script type="text/javascript" charset="utf-8" src="moline-logo-anim-v2.hyperesources/molinelogoanimv2_hype_generated_script.js?79859"></script>
+    </div>
+  </footer>
+</body>
+</html>
